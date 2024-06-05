@@ -1,0 +1,1525 @@
+                                                  NPPV71FLSR                                                  
+                                               NPPV71FLSR_DICT                                                
+
+                                       NPPV71FLSR.DCF                                                         
+                                   Last Modified:  10/21/2020  10:38:36 AM                                    
+
+--------------------------------------------------------------------------------------------------------------
+Level Name                    Level Label                                                  Type            Rec
+  Record Name                   Record Label                                              Value  Req  Max  Len
+--------------------------------------------------------------------------------------------------------------
+INVENTORY                     INVENTORY                                                                       
+  RECORD1                       RECORD1                                                          Yes    1  323
+Level: INVENTORY                                       Record: RECORD1
+--------------------------------------------------------------------------------------------------------------
+                                                                                 Data Item            Dec Zero
+Item Name              Item Label                                     Start  Len Type Type  Occ  Dec Char Fill
+--------------------------------------------------------------------------------------------------------------
+INV_ID            (id) INVENTORY ID                                       1    5    N    I    1    0   No   No
+P_ID              (id) Unit/Provider line number ID                       6    2    N    I    1    0   No   No
+                         (record type)                                    0    0   AN    I    1    0   No   No
+W000                   Survey phase                                       8    4   AN    I    1    0   No   No
+W001                   Region (Country-specific)                         12    2    N    I    1    0   No   No
+                               1   Eastern mountain
+                               2   Central mountain
+                               3   Western mountain
+                               4   Eastern hill
+                               5   Central hill
+                               6   Western hill
+                               7   Mid-western hill
+                               8   Far-western hill
+                               9   Eastern terai
+                               10  Central terai
+                               11  Western terai
+                               12  Mid-western terai
+                               13  Far-western terai
+W002                   District (Country-specific)                       14    3    N    I    1    0   No   No
+                               1   Taplejung
+                               2   Panchthar
+                               3   Ilam
+                               4   Jhapa
+                               5   Morang
+                               6   Sunsari
+                               7   Dhankuta
+                               8   Terhathum
+                               9   Sankhuwasabha
+                               10  Bhojpur
+                               11  Solukhumbu
+                               12  Okhaldhunga
+                               13  Khotang
+                               14  Udayapur
+                               15  Saptari
+                               16  Siraha
+                               17  Dhanusa
+                               18  Mahotari
+                               19  Sarlahi
+                               20  Sindhuli
+                               21  Ramechhap
+                               22  Dolakha
+                               23  Sindhupalchowk
+                               24  Kavre
+                               25  Lalitpur
+                               26  Bhaktapur
+                               27  Kathmandu
+                               28  Nuwakot
+                               29  Rasuwa
+                               30  Dhading
+                               31  Makwanpur
+                               32  Rautahat
+                               33  Bara
+                               34  Parsa
+                               35  Chitwan
+                               36  Gorkha
+                               37  Lamjung
+                               38  Tanahu
+                               39  Syangja
+                               40  Kaski
+                               41  Manang
+                               42  Mustang
+                               43  Myagdi
+                               44  Parbat
+                               45  Baglung
+                               46  Gulmi
+                               47  Palpa
+                               48  Nawalparasi
+                               49  Rupandehi
+                               50  Kapilbastu
+                               51  Arghakhanchi
+                               52  Pyuthan
+                               53  Rolpa
+                               54  Rukum
+                               55  Salyan
+                               56  Dang
+                               57  Banke
+                               58  Bardia
+                               59  Surkhet
+                               60  Dailekh
+                               61  Jajarkot
+                               62  Dolpa
+                               63  Jumla
+                               64  Kalikot
+                               65  Mugu
+                               66  Humla
+                               67  Bajura
+                               68  Bajhang
+                               69  Achham
+                               70  Doti
+                               71  Kailali
+                               72  Kanchanpur
+                               73  Dadeldhura
+                               74  Baitadi
+                               75  Darchula
+W003                   NA - Urban/rural                                  17    1    N    I    1    0   No   No
+                               1  Urban
+                               2  Rural
+                           (m) 9  
+W004                   Facility number                                   18    5    N    I    1    0   No   No
+W004P                  Provider line number                              23    2    N    I    1    0   No   No
+W005                   Sample weight (provider weights )                 25    8    N    I    1    0   No   No
+W007                   Facility type (Country-specific)                  33    2    N    I    1    0   No   No
+                               1   Central Govt. Hospital
+                               2   Regional Govt. Hospital
+                               3   Sub-regional Govt. Hospital
+                               4   Zonal Govt. Hospital
+                               5   District Govt. Hospital
+                               6   Other Hospital (Not state-owned)
+                               7   Primary Health Care Center (PHCC)
+                               8   Health Post (HP)
+                               9   Sub-health post (SHP)
+                               10  Urban Health Centre (UHC)
+                               11  HTC (stand alone)
+                               12  Other Public Hospital
+                               13  Central Level Govt. Hospital
+                               14  District Level Govt. Hospital
+W008                   Facility managing authority (Country-specific)    35    2    N    I    1    0   No   No
+                               1  Government/Public
+                               2  NGO/Private not-for-profit
+                               3  Private for profit
+                               4  Mission/ Faith-based
+W009                   Interviewer                                       37    3    N    I    1    0   No   No
+                               1:500  
+W009K                  NA - Keyer                                        40    3    N    I    1    0   No   No
+                               1:500  
+W020                   Permission to intervIew/provides any client ser   43    1    N    I    1    0   No   No
+                               0  No, no client service/lab work reported - sample weight - 0
+                               1  Yes, agrees and provides client service
+                               7  Not returned from field
+W030                   Provider sex                                      44    1    N    I    1    0   No   No
+                               1  Male
+                               2  Female
+                           (m) 9  
+                          (na)    
+W031                   NA - Provider status                              45    1    N    I    1    0   No   No
+                               1  Assigned
+                               2  Seconded
+                           (m) 9  
+                          (na)    
+W032                   Month of interview                                46    2    N    I    1    0   No   No
+                               1:12  
+W033                   Year of interview                                 48    4    N    I    1    0   No   No
+                               2012:2015  
+                          (na)            
+W033D                  Day of interview                                  52    2    N    I    1    0   No   No
+                               1:31  
+W041                   Number of ANC observation/exit                    54    2    N    I    1    0   No   No
+                               0:25  
+                          (na)       
+W042                   Number of SC observation/exit                     56    2    N    I    1    0   No   No
+                               0:25  
+                          (na)       
+W043                   Number of FP observation/exit                     58    2    N    I    1    0   No   No
+                               0:25  
+                          (na)       
+W050                   Previously interviewed                            60    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+W051                   Facility number where previously interviewed      61    5    N    I    1    0   No   No
+WV012B                 Child Immunization services present and complet   66    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV012C                 Sick children services present and completed -    67    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV012D                 Growth monitoring services present and complete   68    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV013                  Family planning services present and completed    69    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV013S                 Sterilizations performed - Facility data V300s    70    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes,both male and female
+                               2  Yes, female only
+                               3  Yes, male only
+                               7  Not returned from field
+WV014A                 Antenatal services present and completed - Faci   71    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV015A                 Normal delivery and newborn care present and co   72    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV015C                 C-section delivery services present and complet   73    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV016                  STI Services present and completed - Facility d   74    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV034                  Laboratory data present and completed - Facilit   75    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV034A                 Blood typing services present and completed - F   76    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV034B                 Blood transfusion data present and completed -    77    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV034C                 Section 17A: Diagnosis or treatment of Kalaazar   78    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV034D                 Section 17B: Management of snake bite - CS        79    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV034E                 Section 17B: Management of dog bite/ Rabies - C   80    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV042                  HIV testing data present and completed - Facili   81    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV043                  TB data present and completed - Facility data V   82    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV044                  HIV treatment: ART data present and completed -   83    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV045                  PMTCT of HIV infection services present           84    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV046                  HIV care and support data present and completed   85    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV047                  Malaria present and completed - Facility data V   86    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV048                  Non-communicable diseases data present and comp   87    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WV049                  Minor surgical services data present and comple   88    1    N    I    1    0   No   No
+                               0  No service
+                               1  Yes, completed
+                               7  Not returned from field
+WVT201                 Facility offers EPI constructed - Facility data   89    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+WVT202                 NA - Facility offers EPI + BCG + Pneumococcal +   90    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+WVT301                 Facility offers any modern temporary family pla   91    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+WVT302                 Facility offers sterilization constructed - Fac   92    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+WVT303                 Facility offers Periodic Abstinence/temporary f   93    1    N    I    1    0   No   No
+WVT1201                Facility offers PMTCT constructed - Facility da   94    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+WVT1401                Facility offers ART constructed - Facility data   95    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+WVT1501                Facility offers HIV care and support services c   96    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+W101                   Technical qualification of provider (Country-sp   97    2    N    I    1    0   No   No
+  (W101_VS1)             Provider Qualification (survey specific)       
+                               1   Generalist [non-specialist] (01)
+                               2   Gynecologist / obstetrician (02)
+                               3   Anesthesiologist 03)
+                               4   Pathologist (04)
+                               5   General surgeon (05)
+                               6   Pediatrician (06)
+                               7   Medical officer (MBBS, BDS) (08)
+                               8   Other specialists medical doctors (07)
+                               15  Nurse/mid-wife(MN, BSC Nurse, BN, ANM)(10)
+                               16  Anesthetic assistant (09)
+                               25  Lab technologist/officer/lab assistant(11)
+                               35  Counselor with clinical qualification  (STAND-ALONE HTC ONLY) (16)
+                               36  Counselor without clinical qualification (STAND-ALONE HTC ONLY) (17)
+                               40  Health asst.(HA) / AHW / SAHW / Public health inspector(12)
+                               42  Other clinical staff not listed above(E.G., DIETICIAN) (18)
+                               50  Non-technical staff/ no technical qualification(95)
+  (W101_VS2)             Provider Qualification (survey specific)       
+                               1:14   Medical staff
+                               15:24  Nursing staff
+                               25:34  Pharmacy/Lab/Radiology staff
+                               35:39  Counseling/education/social work staff
+                               40:49  Other clinical staff
+                               50:59  Other support staff
+                               96     Other
+W103A                  Total years of primary, secondary and further e   99    2    N    I    1    0   No   No
+                               0:35  
+                           (m) 99    
+W105                   Year of graduation                               101    4    N    I    1    0   No   No
+                               0          No technical training
+                               1950:2015  
+                               9998       Don't know
+                           (m) 9999       
+                          (na)            
+W106                   Year began working in facility                   105    4    N    I    1    0   No   No
+                               1950:2015  
+                               9998       Don't know
+                           (m) 9999       
+                          (na)            
+W108                   Hours per week work in facility                  109    3    N    I    1    0   No   No
+                               0:168  
+                           (m) 999    
+                          (na)        
+W111                   Supervision of work                              112    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes, past 3 months
+                               2  Yes, past 4-6 months
+                               3  Yes, past 7-12 months
+                               4  Yes, more than 12 months ago
+                           (m) 9  
+W112                   Times in past 6 months has been supervised       113    3    N    I    1    0   No   No
+                               0:180  
+                               996    Every day
+                           (m) 999    
+                          (na)        
+W113A                  Supervisor action:Check records/reports          116    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+                           (m) 9  
+                          (na)    
+W113B                  Supervisor action:Observe work                   117    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+                           (m) 9  
+                          (na)    
+W113C                  Supervisor action:Provide feedback (positive or  118    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+                           (m) 9  
+                          (na)    
+W113F                  Supervisor action:Provide updates on admin/tech  119    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+                           (m) 9  
+                          (na)    
+W113G                  Supervisor action:Discuss problems               120    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+                           (m) 9  
+                          (na)    
+W113I                  Supervisor action:Provide written/verbal positi  121    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+                           (m) 9  
+                          (na)    
+W114                   Has written job description                      122    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes, observed
+                               2  Yes, reported
+                           (m) 9  
+                          (na)    
+W115                   Opportunities for promotion in current job       123    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know,uncertain
+                           (m) 9  
+                          (na)    
+W116                   NA - Salary supplement:Any                       124    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W116A                  NA - Salary supplement: Monthly or daily         125    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W116B                  NA - Salary supplement:Per diem when training    126    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W116C                  NA - Salary supplement:Duty allowance            127    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W116D                  NA - Salary supplement:Payment for extra activi  128    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W116X                  NA - Salary supplement:Other                     129    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W117                   NA - Non-monetary incentive:Any                  130    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W117A                  NA - Non-monetary incentive: Uniform/caps/backp  131    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W117B                  NA - Non-monetary incentive:Discount medicines/  132    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W117C                  NA - Non-monetary incentive:Training             133    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W117D                  NA - Non-monetary incentive:Food ration          134    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W117E                  NA - Non-monetary incentive:Subsidized housing   135    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W117F                  NA - Non-monetary incentive:Time off/ holidays   136    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W117X                  NA - Non-monetary incentive:Other                137    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W119                   Manager or in-charge of unit                     138    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+W120                   Provides clinical services                       139    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               2  Only lab work (To Lab variables)
+                           (m) 9  
+W121A                  Provides:Diagnosis and/or treatment of STIs      140    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121B                  Provides:Diagnosis and/or treatment of malaria   141    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121C                  Provides:Child health services                   142    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121C1                 Provides:Child health services - Child vaccinat  143    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121C2                 Provides:Child health services - Child growth m  144    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121C3                 Provides:Child health services - Child curative  145    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121D                  Provides:Family planning services                146    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121E                  Provides:ANC/PNC care                            147    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121E1                 Provides:ANC/PNC care (Specific)                 148    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes, both ANC and PNC
+                               2  Yes, only ANC
+                               3  Yes, only PNC
+                           (m) 9  
+                          (na)    
+W121F                  Provides:Delivery services                       149    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121G                  Provides:Newborn care                            150    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121H                  Provides:Youth friendly services                 151    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121I                  Provides:Diagnose/ manage diabetes               152    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121J                  Provides:Diagnose/ manage cardio-vascular disea  153    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W121K                  Provides:Diagnose/ manage chronic respiratory c  154    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W122                   Provides TB:Diagnosis and/or treatment           155    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W122A                  Provides TB:Diagnosis based on clinical symptom  156    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W122B                  Provides TB:Diagnosis based on sputum            157    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W122C                  Provides TB:Prescribe treatment                  158    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W122D                  Provides TB:Follow-up treatment                  159    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W122E                  Provides TB:DOTS strategy                        160    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W122F                  Provides TB:Management of TB-HIV co-infection    161    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W122G                  Provides TB:Management of MDR-TB or identificat  162    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W123                   Provides HIV counseling-testing:Any services     163    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W123M                  Provides HIV counseling-testing:Counseling rela  164    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W123N                  Provides HIV counseling-testing:Conducts HIV te  165    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W123O                  Provides HIV counseling-testing:Provides any se  166    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W123P                  Provides HIV counseling-testing:Provides PEP se  167    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W124                   Provides Clinical HIV:Any clinical HIV services  168    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W124L                  Provides Clinical HIV:Pediatric AIDS care        169    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W124P                  Provides Clinical HIV:Palliative care            170    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W124Q                  Provides Clinical HIV:HIV/AIDS home-based care   171    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W124R                  Provides Clinical HIV:Any ART services includin  172    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W124S                  Provides Clinical HIV:Preventive treatment for   173    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W124T                  Provides Clinical HIV:Stigma and discrimination  174    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W125                   Provides Lab services:Any services               175    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W125A                  Provides Lab services:Sputum diagnosis of TB     176    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W125B                  Provides Lab services:Conducts any HIV testing   177    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W125E                  Provides Lab services:HIV RDT                    178    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W125F                  Provides Lab services:Other HIV tests such as P  179    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W125G                  Provides Lab services:Hematology testing (anemi  180    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W125H                  Provides Lab services:CD4 testing                181    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W125I                  Provides Lab services:Malaria microscopy         182    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W125J                  Provides Lab services:Malaria RDT                183    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W126                   Provides PMTCT services:Any PMTCT services       184    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W126A                  Provides PMTCT services:Preventive counseling    185    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W126B                  Provides PMTCT services:HIV test counseling      186    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W126C                  Provides PMTCT services:Conduct HIV test         187    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W126D                  Provides PMTCT services:Provide ARV to mother    188    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W126E                  Provides PMTCT services:Provide ARV to infant    189    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W135                   Total deliveries in past 6 months                190    4    N    I    1    0   No   No
+                               0:4000  
+                           (m) 9999    
+                          (na)         
+W136                   Time since last use of partograph                194    1    N    I    1    0   No   No
+                               0  Never
+                               1  Past week
+                               2  Past month
+                               3  Past 6 months
+                               4  More than 6 months ago
+                               8  Don't know
+                           (m) 9  
+                          (na)    
+W141A                  General in-service:Standard precautions          195    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W141C                  General in-service:HMIS or reporting requiremen  196    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W141D                  NA - General in-service:Confidentiality/non-dis  197    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W141E                  General in-service:Injection safety practices    198    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W141F                  NA - General in-service:TB infection control     199    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W141G                  General in-service:IMEESC (Integrated managemen  200    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W141X                  General in-service:Other general training - CS   201    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W142                   STI in-service:Any in-service                    202    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W142A                  STI in-service:Diagnosis/treatment               203    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W142B                  STI in-service:WHO Syndromic approach to diagno  204    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W142C                  STI in-service:Drug resistance to STI treatment  205    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W142X                  STI in-service:Other training on STI - CS        206    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W143                   Malaria in-service:Any in-service                207    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W143A                  Malaria in-service:Diagnosing malaria in adults  208    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W143B                  Malaria in-service:Diagnosing malaria in childr  209    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W143C                  NA - Malaria in-service:IPT for pregnant women   210    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W143D                  Malaria in-service:How to perform malaria RDT    211    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W143E                  Malaria in-service:Case management/ treatment i  212    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W143F                  Malaria in-service:Case management/ treatment i  213    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W143G                  Malaria in-service:Case management/ treatment i  214    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W143X                  Malaria in-service:Other training on malaria -   215    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144                   Child health in-service:Any in-service           216    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W144A                  Child health in-service:EPI/Cold chain monitori  217    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144B                  Child health in-service:ARI diagnosis and/or tr  218    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144C                  Child health in-service:Diarrhea diagnosis and/  219    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144E                  Child health in-service:Nutrition/micronutrient  220    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144F                  Child health in-service:Breastfeeding            221    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144G                  Child health in-service:Complementary feeding o  222    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144H                  Child health in-service:(IMCI) Integrated manag  223    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144I                  Child health in-service:Diagnosis of malaria     224    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144J                  Child health in-service:How to perform malaria   225    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144K                  Child health in-service:Case management/ treatm  226    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144L                  Child health in-service:Pediatric HIV/AIDS       227    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144M                  Child health in-service:Pediatric ART            228    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144N                  Child health in-service:INFANT AND YOUNG CHILD   229    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144O                  Child health in-service:IRON DEFICIENENCY DISOR  230    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144P                  Child health in-service:MATERNAL AND INFANT AND  231    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W144X                  Child health in-service:Other                    232    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W145                   FP in-service:Any                                233    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W145A                  FP in-service:General counseling                 234    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W145D                  NA - FP in-service:Clinical management of FP me  235    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W145E                  FP in-service:FP topics for HIV+ women           236    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W145F                  FP in-service:Insertion/removal of IUCDs         237    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W145G                  FP in-service:Insertion/ removal of implants     238    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W145H                  FP in-service:Performing vasectomy               239    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W145I                  FP in-service:Performing tubal ligation          240    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W145J                  FP in-service:Post-partum family planning        241    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W145X                  FP in-service:Other                              242    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146                   ANC/PNC in-service:Any                           243    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W146A                  ANC/PNC in-service:ANC counseling (nutrition/ F  244    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146B                  ANC/PNC in-service:ANC screening (blood pressur  245    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146D                  ANC/PNC in-service:Complications of pregnancy a  246    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146F                  NA - ANC/PNC in-service:IPT of malaria in pregn  247    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146X                  ANC/PNC in-service:Other training on ANC/PNC ca  248    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146H                  ANC/PNC in-service:Any topic related to HIV/AID  249    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W146I                  ANC/PNC in-service:Prevention of PMTCT or HIV/A  250    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146J                  ANC/PNC in-service:Modified obstetric practices  251    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146N                  ANC/PNC in-service:Antiretroviral prophylactic   252    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146O                  ANC/PNC in-service:Nutritional counseling for n  253    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146R                  ANC/PNC in-service:Nutritional assessment of pr  254    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146S                  ANC/PNC in-service:Infant and young child feedi  255    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W146XA                 ANC/PNC in-service:Other trainings on maternal   256    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W147                   Delivery in-service:Any                          257    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W147A                  Delivery in-service:Care during labor/delivery   258    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W147D                  Delivery in-service:Lifesaving skills (LSS)/ em  259    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W147E                  Delivery in-service:Post abortion care           260    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W147G                  Delivery in-service:Optimal delivery care for P  261    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W147H                  Delivery in-service:Active management of 3rd st  262    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W147I                  Delivery in-service:Integrated management of pr  263    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W147J                  Delivery in-service:Special delivery care pract  264    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W147K                  Delivery in-service:Comprehensive abortion care  265    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W147L                  Delivery in-service:Medical abortion (MA) - CS   266    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W147X                  Delivery in-service:Other training on delivery   267    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W148                   Newborn in-service:Any                           268    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W148B                  Newborn in-service:Neonatal resuscitation using  269    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W148C                  Newborn in-service:Early and exclusive breastfe  270    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W148D                  Newborn in-service:Newborn infection management  271    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W148E                  Newborn in-service:Thermal care (including imme  272    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W148F                  Newborn in-service:Sterile cord cutting and app  273    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W148G                  Newborn in-service:KMC for low birth weight bab  274    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W148X                  Newborn in-service:Other training on newborn ca  275    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W149                   Youth Friendly Services (YFS) in-service:Any in  276    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150                   TB in-service:Any in-service                     277    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W150A                  TB in-service:Diagnosis based on clinical sympt  278    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150B                  TB in-service:Diagnosis based on sputum          279    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150D                  TB in-service:Prescribing treatment              280    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150E                  TB in-service:DOTS strategy                      281    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150F                  TB in-service:Follow-up treatment                282    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150G                  TB in-service:Management of TB-HIV co-infection  283    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150H                  TB in-service:Management of MDR-TB or identific  284    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150I                  TB in-service:PAL training - CS                  285    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150J                  TB in-service:Lab modular training - CS          286    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150K                  TB in-service:TB modular training - CS           287    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150L                  TB in-service:TB infection control training - C  288    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W150X                  TB in-service:Other training on TB - CS          289    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151                   HIV in-service:Any                               290    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W151C                  HIV in-service:Conduct HIV test                  291    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151M                  HIV in-service:Any preventive treatment of oppo  292    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151Q                  HIV in-service:Pediatric AIDS care               293    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151R                  HIV in-service:Provision of palliative care      294    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151S                  HIV in-service:Provision of PEP services         295    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151T                  HIV in-service:HIV/AIDS home-based care          296    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151U                  HIV in-service:Counseling related to HIV testin  297    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151V                  HIV in-service:Any services related to PMTCT     298    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151W                  HIV in-service:Any ART services including presc  299    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151XA                 HIV in-service:Stigma and discrimination of peo  300    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W151X                  HIV in-service:Other traning on HIV - CS         301    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W153                   Lab in-service: Any                              302    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W153A                  Lab in-service:Microscopic exam of sputum to di  303    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W153B                  Lab in-service:HIV testing                       304    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W153C                  Lab in-service:CD4 testing                       305    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W153D                  Lab in-service:Blood screening for HIV prior to  306    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W153E                  Lab in-service:Tests for monitoring ART such as  307    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W153H                  Lab in-service:Blood screening Hepatitis prior   308    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W153I                  Lab in-service:Malaria microscopy                309    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W153J                  Lab in-service:Malaria RDT                       310    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W153X                  Lab in-service:Other training on diag test       311    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W170                   Received Hepatitis B vaccine as part of service  312    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+W171                   Number of Hepatitis B doses has ever received    313    1    N    I    1    0   No   No
+                               0    None
+                               1:2  
+                               3    3 or more
+                               8    Don't know
+                           (m) 9    
+                          (na)      
+W172A                  First ranked desired improvement                 314    2    N    I    1    0   No   No
+                               0   No first ranked
+                               1   More support from supervisor
+                               2   More knowledge/ updates/ training
+                               3   More supplies/ stock
+                               4   Better quality equipment/supplies
+                               5   Less workload/ more staff
+                               6   Better working hours/ flexible time
+                               7   More incentives (salary, promotion, holidays)
+                               8   Transportation for referral patients
+                               9   Providing ART
+                               10  Providing PEP
+                               11  Increased security
+                               12  Better facility infrastructure
+                               13  More autonomy/ independence
+                               14  Emotional support for staff (counseling/ social activities
+                               96  Other
+                           (m) 99  
+W172B                  Second ranked desired improvement                316    2    N    I    1    0   No   No
+                               0   No second ranked
+                               1   More support from supervisor
+                               2   More knowledge/ updates/ training
+                               3   More supplies/ stock
+                               4   Better quality equipment/supplies
+                               5   Less workload/ more staff
+                               6   Better working hours/ flexible time
+                               7   More incentives (salary, promotion, holidays)
+                               8   Transportation for referral patients
+                               9   Providing ART
+                               10  Providing PEP
+                               11  Increased security
+                               12  Better facility infrastructure
+                               13  More autonomy/ independence
+                               14  Emotional support for staff (counseling/ social activities
+                               96  Other
+                           (m) 99  
+W172C                  Third ranked desired improvement                 318    2    N    I    1    0   No   No
+                               0   No third ranked
+                               1   More support from supervisor
+                               2   More knowledge/ updates/ training
+                               3   More supplies/ stock
+                               4   Better quality equipment/supplies
+                               5   Less workload/ more staff
+                               6   Better working hours/ flexible time
+                               7   More incentives (salary, promotion, holidays)
+                               8   Transportation for referral patients
+                               9   Providing ART
+                               10  Providing PEP
+                               11  Increased security
+                               12  Better facility infrastructure
+                               13  More autonomy/ independence
+                               14  Emotional support for staff (counseling/ social activities
+                               96  Other
+                           (m) 99  
+W173I                  In-service: Diabetes                             320    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W173J                  In-service: Cardio-vascular diseases             321    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+W173K                  In-service: Chronic respiratory diseases         322    1    N    I    1    0   No   No
+                               0  None
+                               1  Yes, in past 24 months
+                               2  Yes, over 24 months ago
+                           (m) 9  
+                          (na)    
+SW300A                 Aware of Golden Thousand Days period             323    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  
+                          (na)    
+--------------------------------------------------------------------------------------------------------------
+Relation Name         Primary               Linked by             Secondary             Linked by
+--------------------------------------------------------------------------------------------------------------

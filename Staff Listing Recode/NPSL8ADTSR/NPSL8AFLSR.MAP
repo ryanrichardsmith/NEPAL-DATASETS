@@ -1,0 +1,109 @@
+                                                  NPSL8AFLSR                                                  
+                                               NPSL8AFLSR_DICT                                                
+
+                                       NPSL8AFLSR.DCF                                                         
+                                    Last Modified:  6/28/2022  6:44:44 AM                                     
+
+--------------------------------------------------------------------------------------------------------------
+Level Name                    Level Label                                                  Type            Rec
+  Record Name                   Record Label                                              Value  Req  Max  Len
+--------------------------------------------------------------------------------------------------------------
+INVENTORY                     INVENTORY                                                                       
+  INV9_3                        Provider listing                                                 Yes    1   28
+Level: INVENTORY                                       Record: Provider listing
+--------------------------------------------------------------------------------------------------------------
+                                                                                 Data Item            Dec Zero
+Item Name              Item Label                                     Start  Len Type Type  Occ  Dec Char Fill
+--------------------------------------------------------------------------------------------------------------
+INV_ID            (id) INVENTORY ID                                       1    5    N    I    1    0   No   No
+VU11              (id) Provider line number                               6    2    N    I    1    0   No   No
+                               1:99  
+                          (na)       
+                         (record type)                                    0    0   AN    I    1    0   No   No
+VU13                   Provider Qualification (survey specific)           8    2    N    I    1    0   No   No
+  (VU13_VS1)             Provider Qualification (survey specific)       
+                               1   Generalist [non-specialist] (01)
+                               2   Gynecologist / obstetrician (02)
+                               3   Anesthesiologist (03)
+                               4   Pathologist (04)
+                               5   General surgeon (05)
+                               6   Pediatrician (06)
+                               7   Medical officer (MBBS, BDS) (08)
+                               8   Other specialists medical doctors (07)
+                               15  Nurse/auxillary nurse midwife (ANM) (10,13)
+                               16  Anesthetic assistant (09)
+                               25  Lab technologist/officer/ lab tech/lab assistant (11)
+                               35  Counselor with clinical qualification (Stand-alone HTC only) (16)
+                               36  Counselor without clinical qualification (Stand-alone htc only) (17)
+                               40  Health assistant (ha) / AHW / SAHW / PHI (12)
+                               42  Other clinical staff not listed above (e.g., Dietician) (18)
+                               50  Non-clinical staff/No technical qualification (95)
+  (VU13_VS2)             Provider Qualification (survey specific)       
+                               1:14   Medical staff
+                               15:24  Nursing staff
+                               25:34  Pharmacy/Lab/Radiology staff
+                               35:39  Counseling/education/social work staff
+                               40:49  Other clinical staff
+                               50:59  Other support staff
+                               96     Other
+VU13A                  Provider Gender                                   10    1    N    I    1    0   No   No
+                               1  Male
+                               2  Female
+                           (m) 9  
+VU14                   Provides ART                                      11    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU15                   Provides HIV counseling/testing                   12    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU16                   Provides HIV related                              13    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU17                   Provides any malaria STI TB dx/tx                 14    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU17A                  Provides malaria dx/tx                            15    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU17B                  Provides TB dx/tx                                 16    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU17C                  Provides STI dx/tx                                17    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU17D                  Provides non-communicable disease dx/tx           18    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU18                   Provides any ANC/FP/Delivery                      19    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU19                   Provides other client services                    20    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU20                   Conducts lab tests                                21    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU21                   Individual interview attempted                    22    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU22                   Provides ANC care                                 23    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU23                   Provides PMTCT care                               24    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU24                   Provides Delivery care                            25    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU25                   Provides FP care                                  26    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU26                   Provides Child health care                        27    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+VU27                   Provides surgery                                  28    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+--------------------------------------------------------------------------------------------------------------
+Relation Name         Primary               Linked by             Secondary             Linked by
+--------------------------------------------------------------------------------------------------------------
