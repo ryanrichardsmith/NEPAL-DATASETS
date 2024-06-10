@@ -6,6 +6,7 @@ library(table1)
 library(dplyr)
 library(labelled)
 library(survey)
+library(forcats)
 
 ###############
 ## 2015 Dataset  
@@ -218,3 +219,99 @@ svyby(~hiv_testing, ~as_factor(v003), NP.2021.survey, svymean)
 svyby(~hiv_testing, ~as_factor(v001), NP.2021.survey, svytotal)
 svyby(~hiv_testing, ~as_factor(v001), NP.2021.survey, svymean)
 
+#####################
+## Combining datasets   
+#####################
+
+#renaming province variable in 2021 dataset so it matches 2015 dataset
+NP.2021 <- NP.2021 %>%
+  rename(province = v001)
+
+
+#recoding districts in 2021 dataset to match 2015 dataset
+NP.2021 <- NP.2021 %>%
+  mutate(v002 = case_when(
+    v002 == 101 ~ 1, 
+    v002 == 109 ~ 2,
+    v002 == 110 ~ 3,
+    v002 == 111 ~ 4,
+    v002 == 112 ~ 5,
+    v002 == 113 ~ 6,
+    v002 == 107 ~ 7,
+    v002 == 108 ~ 8,
+    v002 == 102 ~ 9,
+    v002 == 106 ~ 10,
+    v002 == 103 ~ 11,
+    v002 == 104 ~ 12,
+    v002 == 105 ~ 13,
+    v002 == 114 ~ 14,
+    v002 == 201 ~ 15,
+    v002 == 202 ~ 16,
+    v002 == 203 ~ 17,
+    v002 == 204 ~ 18,
+    v002 == 205 ~ 19,
+    v002 == 311 ~ 20,
+    v002 == 310 ~ 21,
+    v002 == 301 ~ 22,
+    v002 == 302 ~ 23,
+    v002 == 309 ~ 24, #kavrepalanchok -> kavre
+    v002 == 308 ~ 25,
+    v002 == 307 ~ 26,
+    v002 == 306 ~ 27,
+    v002 == 305 ~ 28,
+    v002 == 303 ~ 29,
+    v002 == 304 ~ 30,
+    v002 == 312 ~ 31,
+    v002 == 206 ~ 32,
+    v002 == 207 ~ 33,
+    v002 == 208 ~ 34,
+    v002 == 313 ~ 35, #chitawan -> chitwan
+    v002 == 401 ~ 36,
+    v002 == 406 ~ 37,
+    v002 == 407 ~ 38,
+    v002 == 409 ~ 39,
+    v002 == 405 ~ 40,
+    v002 == 402 ~ 41,
+    v002 == 403 ~ 42,
+    v002 == 404 ~ 43,
+    v002 == 410 ~ 44,
+    v002 == 411 ~ 45,
+    v002 == 504 ~ 46,
+    v002 == 506 ~ 47,
+    v002 == 408 | v002 == 507 ~ 48, #no east & west nawalparasi in 2015 data
+    v002 == 508 ~ 49,
+    v002 == 509 ~ 50,
+    v002 == 505 ~ 51,
+    v002 == 503 ~ 52,
+    v002 == 502 ~ 53,
+    v002 == 501 | v002 == 608 ~ 54, #no east & west rukum in 2015 data
+    v002 == 609 ~ 55,
+    v002 == 510 ~ 56,
+    v002 == 511 ~ 57,
+    v002 == 512 ~ 58, #bardiya -> bardia
+    v002 == 610 ~ 59,
+    v002 == 606 ~ 60,
+    v002 == 607 ~ 61,
+    v002 == 601 ~ 62,
+    v002 == 604 ~ 63,
+    v002 == 605 ~ 64,
+    v002 == 602 ~ 65,
+    v002 == 603 ~ 66,
+    v002 == 701 ~ 67,
+    v002 == 702 ~ 68,
+    v002 == 707 ~ 69,
+    v002 == 706 ~ 70,
+    v002 == 708 ~ 71,
+    v002 == 709 ~ 72,
+    v002 == 705 ~ 73,
+    v002 == 704 ~ 74,
+    v002 == 703 ~ 75))
+
+#copying the district labels from the 2015 dataset
+#Note the following changes:
+#kavrepalanchok (2021 data) is now kavre (from 2015 data)
+#chitawan (2021 data) is now chitwan (from 2015 data)
+#bardiya (2021 data) is now bardia (from 2015 data)
+
+val_labels(NP.2021$v002) <- val_labels(NP.2015$v002)
+var_label(NP.2021$v002) <- "district (country-specific)" 
