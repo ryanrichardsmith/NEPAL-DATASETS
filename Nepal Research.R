@@ -7,6 +7,7 @@ library(dplyr)
 library(labelled)
 library(survey)
 library(tidyr)
+library(scales)
 
 ###############
 ## 2015 Dataset  
@@ -80,7 +81,7 @@ NP.2015$earthquake <- labelled::labelled(
 
 var_label(NP.2015$earthquake) <- "earthquake-affected districts"
 
-#storing & displaying table
+#displaying table
 table1(~as_factor(v007) + as_factor(v001) + as_factor(v008) + 
          as_factor(earthquake), data=NP.2015)
 
@@ -175,7 +176,7 @@ var_label(NP.2021$v008) <- "managing authority"
 
 #tabulating unweighted counts
 table1(~as_factor(v007) + as_factor(v008) + as_factor(v003) + 
-         as_factor(province), data=NP.2021)
+         as_factor(v001), data=NP.2021)
 
 #taking survey design into account
 NP.2021.survey <- NP.2021 |>
@@ -316,24 +317,52 @@ NP.2021 <- NP.2021 %>%
 val_labels(NP.2021$v002) <- val_labels(NP.2015$v002)
 var_label(NP.2021$v002) <- "district (country-specific)" 
 
+#recoding 2015 facility types to group UHCs under PHCCs 
+NP.2015 <- NP.2015 %>%
+  mutate(v007 = case_when(
+    v007 == 1 ~ 1,
+    v007 == 2 ~ 2,
+    v007 == 3 ~ 3,
+    v007 == 4 | v007 == 6 ~ 4, #grouping UHCs as PHCCs
+    v007 == 5 ~ 5,
+    v007 == 7 ~ 6))
+
 #changing 2015 facility type labels to match 2021 labels
 NP.2015$v007 <- labelled::labelled(
   NP.2015$v007,
   c("federal/provincial-level hospitals" = 1, "local-level hospitals" = 2, 
-    "private hospitals" = 3, "PHCCs" = 4, "HPs" = 5, "UHCs" = 6,
-    "stand-alone HTCs" = 7)
-)
+    "private hospitals" = 3, "PHCCs (incl. UHCs & CHUs)" = 4, "HPs" = 5, "stand-alone HTCs" = 6))
+
+#recoding 2021 facility types to group UHCs and CHUs under PHCCs 
+NP.2021 <- NP.2021 %>%
+  mutate(v007 = case_when(
+    v007 == 1 ~ 1,
+    v007 == 2 ~ 2,
+    v007 == 3 ~ 3,
+    v007 == 4 | v007 == 6 | v007 == 8 ~ 4, #grouping UHCs & CHUs as PHCCs
+    v007 == 5 ~ 5,
+    v007 == 7 ~ 6))
 
 #swapping the last two 2021 facility type labels to avoid grouping 2021 CHUs with 2015 HTCs
 NP.2021$v007 <- labelled::labelled(
   NP.2021$v007,
   c("federal/provincial-level hospitals" = 1, "local-level hospitals" = 2, 
-    "private hospitals" = 3, "PHCCs" = 4, "HPs" = 5, "UHCs" = 6,
-    "stand-alone HTCs" = 7, "CHUs" = 8)
-)
+    "private hospitals" = 3, "PHCCs (incl. UHCs & CHUs)" = 4, "HPs" = 5, "stand-alone HTCs" = 6))
 
 #merging dataframes
 NP.ALL <- bind_rows(NP.2015, NP.2021)
+
+#creating simplified partner notification variable
+NP.ALL <- NP.ALL %>%
+  mutate(partner_notification = case_when(
+    v642a == 0 ~ 0,
+    v642a == 3 ~ 1,
+    v642a == 1 | v642a == 2 | v642a == 4 ~ 2
+  ))
+
+NP.ALL$partner_notification <- labelled::labelled(
+  NP.ALL$partner_notification,
+  c("no" = 0, "yes, only passive" = 1, "yes, active or passive" = 2))
 
 #taking survey design into account
 NP.ALL.survey <- NP.ALL |>
@@ -369,18 +398,24 @@ hiv.rdt.weighted <- svyby(~vt807, ~v000 + v007, NP.ALL.survey, svymean, na.rm = 
 #converting proportions to percentages
 hiv.rdt.weighted <- hiv.rdt.weighted %>%
   mutate(vt807 = vt807 * 100) %>%
+  mutate(se = se * 100) %>%
   rename(percent_vt807 = vt807)
 
-#visualizing weighted proportions offacilities offering hiv rapid tests
+#visualizing weighted proportions of facilities offering hiv rapid tests
 hiv.rdt.weighted %>% 
   ggplot() +
   geom_bar(aes(x = as_factor(v007), y = percent_vt807, fill = v000), 
            stat = "identity", position = position_dodge(width = 0.9)) +
+  geom_errorbar(aes(x = as_factor(v007), ymin = percent_vt807 - se, 
+                    ymax = percent_vt807 + se, group = v000),
+                position = position_dodge(width = 0.9), width = 0.25) +
   labs(fill = "Survey Year", 
        y = str_wrap("Proportion of Facilities Offering HIV Rapid Diagnostic Tests (Weighted %)", 
-                    width = 50), x = "Facility Type") +
+                    width = 50), 
+       x = "Facility Type") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  scale_y_continuous(breaks = seq(0, max(hiv.rdt.weighted$percent_vt807), by = 5))
+  scale_y_continuous(breaks = seq(0, max(hiv.rdt.weighted$percent_vt807) + 
+                                    max(hiv.rdt.weighted$se), by = 5))
 
 ###############################################################
 #Exploring Changes in Partner Notification Strategies Over Time
@@ -393,28 +428,10 @@ hiv.rdt.weighted %>%
 #federal/provincial-level hospitals
 NP.ALL %>%
   filter(v007 == 1) %>%
-  group_by(v642a,v000) %>%
+  group_by(partner_notification,v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
-
-#Visualizing unweighted proportions of federal/provincial-level hospitals that  
-#perform partner notification strategies for STIs
-NP.ALL %>%
-  filter(v007 == 1) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Unweighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in Federal/Provincial-Level Hospitals Over Time")
-
 
 #local-level hospitals
 NP.ALL %>%
@@ -424,23 +441,6 @@ NP.ALL %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
 
-#Visualizing unweighted proportions of local-level hospitals that perform
-#partner notification strategies for STIs
-NP.ALL %>%
-  filter(v007 == 2, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Unweighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in Local-Level Hospitals Over Time")
-
 
 #private hospitals
 NP.ALL %>%
@@ -450,24 +450,6 @@ NP.ALL %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
 
-#Visualizing unweighted proportions of private hospitals that perform
-#partner notification strategies for STIs
-NP.ALL %>%
-  filter(v007 == 3, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Unweighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in Private Hospitals Over Time")
-
-
 #PHCCs
 NP.ALL %>%
   filter(v007 == 4) %>%
@@ -475,24 +457,6 @@ NP.ALL %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
-
-#Visualizing unweighted proportions of PHCCs that perform
-#partner notification strategies for STIs
-NP.ALL %>%
-  filter(v007 == 4, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Unweighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in PHCCs Over Time")
-
 
 #HPs
 NP.ALL %>%
@@ -502,49 +466,6 @@ NP.ALL %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
 
-#Visualizing unweighted proportions of HPs that perform
-#partner notification strategies for STIs
-NP.ALL %>%
-  filter(v007 == 5, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Unweighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in HPs Over Time")
-
-
-#UHCs
-NP.ALL %>%
-  filter(v007 == 6) %>%
-  group_by(as_factor(v642a),v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100)
-
-#Visualizing unweighted proportions of UHCs that perform
-#partner notification strategies for STIs
-NP.ALL %>%
-  filter(v007 == 6, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Unweighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in UHCs Over Time")
-
 #stand-alone HTCs
 NP.ALL %>%
   filter(v007 == 7) %>%
@@ -553,48 +474,23 @@ NP.ALL %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
 
-#Visualizing unweighted proportions of stand-alone HTCs that perform
-#partner notification strategies for STIs
+#Visualizing unweighted proportions of health facilities that perform partner
+#notification strategies for STIs
 NP.ALL %>%
-  filter(v007 == 7, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
+  group_by(v007,partner_notification,v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
+  ggplot(aes(x = as_factor(v000), y = percent, fill = as_factor(partner_notification))) +
+  geom_bar(stat = "identity", position = "fill") + 
+  facet_grid(. ~ as_factor(v007), labeller = labeller(v007 = function(x) str_wrap(x, width = 0.1))) +
+  labs(fill = "Partner Notification Strategy", 
        y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Unweighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
+                    width = 50), x = "Survey Year") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in Stand-Alone HTCs Over Time")
-
-
-#CHUs
-NP.ALL %>%
-  filter(v007 == 8) %>%
-  group_by(as_factor(v642a),v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100)
-
-#Visualizing unweighted proportions of CHUs that perform
-#partner notification strategies for STIs
-NP.ALL %>%
-  filter(v007 == 8, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Unweighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in CHUs in 2021")
+  scale_y_continuous(labels = percent_format()) +
+  ggtitle("Wighted Partner Notification Strategies for STIs in Health Facilities Over Time") +
+  theme(strip.text.x = element_text(hjust = 0))
 
 #Tabulating weighted proportions of facilities that perform partner 
 #notification strategies for STIs, broken down by facility type and type 
@@ -602,204 +498,153 @@ NP.ALL %>%
 
 #federal/provincial-level hospitals
 NP.ALL.survey %>%
-  filter(v007 == 1, !is.na(v642a)) %>%
-  group_by(v000, v642a) %>%
+  filter(v007 == 1) %>%
+  group_by(v000, partner_notification) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100) 
   
-#Visualizing weighted proportions of federal/provincial-level hospitals that  
-#perform partner notification strategies for STIs
-NP.ALL.survey %>%
-  filter(v007 == 1, !is.na(v642a)) %>%
-  group_by(v000, v642a) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Weighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in Federal/Provincial-Level Hospitals Over Time")
-
 #local-level hospitals
 NP.ALL.survey %>%
-  filter(v007 == 2, !is.na(v642a)) %>%
-  group_by(as_factor(v642a),v000) %>%
+  filter(v007 == 2) %>%
+  group_by(as_factor(partner_notification),v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
-
-#Visualizing weighted proportions of local-level hospitals that perform
-#partner notification strategies for STIs
-NP.ALL.survey %>%
-  filter(v007 == 2, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Weighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in Local-Level Hospitals Over Time")
 
 #private hospitals
 NP.ALL.survey %>%
   filter(v007 == 3) %>%
-  group_by(as_factor(v642a),v000) %>%
+  group_by(as_factor(partner_notification),v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
-
-#Visualizing weighted proportions of private hospitals that perform
-#partner notification strategies for STIs
-NP.ALL.survey %>%
-  filter(v007 == 3, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Weighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in Private Hospitals Over Time")
-
 
 #PHCCs
 NP.ALL.survey %>%
   filter(v007 == 4) %>%
-  group_by(as_factor(v642a),v000) %>%
+  group_by(as_factor(partner_notification),v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
-
-#Visualizing weighted proportions of PHCCs that perform
-#partner notification strategies for STIs
-NP.ALL.survey %>%
-  filter(v007 == 4, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Weighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in PHCCs Over Time")
-
 
 #HPs
 NP.ALL.survey %>%
   filter(v007 == 5) %>%
-  group_by(as_factor(v642a),v000) %>%
+  group_by(as_factor(partner_notification),v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
 
-#Visualizing weighted proportions of HPs that perform
-#partner notification strategies for STIs
+#Visualizing weighted proportions of health facilities that perform partner
+#notification strategies for STIs
 NP.ALL.survey %>%
-  filter(v007 == 5, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
+  group_by(v007,partner_notification,v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100) %>%
+  ggplot(aes(x = as_factor(v000), y = percent, fill = as_factor(partner_notification))) +
+  geom_bar(stat = "identity", position = "fill") + 
+  facet_grid(. ~ as_factor(v007), labeller = labeller(v007 = function(x) str_wrap(x, width = 0.1))) +
+  labs(fill = "Partner Notification Strategy", 
+       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Weighted %)", 
+                    width = 50), x = "Survey Year") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+  scale_y_continuous(labels = percent_format()) +
+  ggtitle("Weighted Partner Notification Strategies for STIs in Health Facilities Over Time") +
+  theme(strip.text.x = element_text(hjust = 0))
+
+###########################################
+#Exploring Changes in HCV Testing Over Time
+###########################################
+
+#Tabulating unweighted proportions of facilities that offer hcv testing, broken
+#down by year and facility type
+hcv.unweighted <- NP.ALL %>%
+  group_by(v007, v000) %>%
+  summarise(percent_sf874d = mean(sf874d * 100, na.rm = TRUE))
+
+#visualizing unweighted proportions offacilities offering hcv testing
+hcv.unweighted %>% 
   ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
+  geom_bar(aes(x = as_factor(v007), y = percent_sf874d, fill = v000), 
            stat = "identity", position = position_dodge(width = 0.9)) +
   labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Weighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
+       y = str_wrap("Proportion of Facilities Offering Any Test for Hepatitis C (Unweighted %)", 
+                    width = 50), x = "Facility Type") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in HPs Over Time")
+  scale_y_continuous(breaks = seq(0, max(hcv.unweighted$percent_sf874d), by = 5))
 
+#Tabulating weighted proportions of facilities that offer hcv testing, broken
+#down by year and facility type
+hcv.weighted <- svyby(~sf874d, ~v000 + v007, NP.ALL.survey, svymean, na.rm = TRUE)
 
-#UHCs
-NP.ALL.survey %>%
-  filter(v007 == 6) %>%
-  group_by(as_factor(v642a),v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100)
+#converting proportions to percentages
+hcv.weighted <- hcv.weighted %>%
+  mutate(sf874d = sf874d * 100) %>%
+  mutate(se = se * 100) %>%
+  rename(percent_sf874d = sf874d)
 
-#Visualizing weighted proportions of UHCs that perform
-#partner notification strategies for STIs
-NP.ALL.survey %>%
-  filter(v007 == 6, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
+#visualizing weighted proportions of facilities offering hcv testing
+hcv.weighted %>% 
   ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
+  geom_bar(aes(x = as_factor(v007), y = percent_sf874d, fill = v000), 
+           stat = "identity", position = position_dodge(width = 0.9)) +
+  geom_errorbar(aes(x = as_factor(v007), ymin = percent_sf874d - se, 
+                    ymax = percent_sf874d + se, group = v000),
+                position = position_dodge(width = 0.9), width = 0.25) +
+  labs(fill = "Survey Year", 
+       y = str_wrap("Proportion of Facilities Offering Any Test for Hepatitis C (Weighted %)", 
+                    width = 50), 
+       x = "Facility Type") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+  scale_y_continuous(breaks = seq(0, max(hcv.weighted$percent_sf874d) + 
+                                    max(hcv.weighted$se), by = 5))
+
+
+###########################################
+#Exploring Changes in HBV Testing Over Time
+###########################################
+
+#Tabulating unweighted proportions of facilities that offer hbv testing, broken
+#down by year and facility type
+hbv.unweighted <- NP.ALL %>%
+  group_by(v007, v000) %>%
+  summarise(percent_sf874a = mean(sf874a * 100, na.rm = TRUE))
+
+#visualizing unweighted proportions offacilities offering hbv testing
+hbv.unweighted %>% 
+  ggplot() +
+  geom_bar(aes(x = as_factor(v007), y = percent_sf874a, fill = v000), 
            stat = "identity", position = position_dodge(width = 0.9)) +
   labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Weighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
+       y = str_wrap("Proportion of Facilities Offering Any Test for Hepatitis B (Unweighted %)", 
+                    width = 50), x = "Facility Type") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in UHCs Over Time")
+  scale_y_continuous(breaks = seq(0, max(hbv.unweighted$percent_sf874a), by = 5))
 
-#stand-alone HTCs
-NP.ALL.survey %>%
-  filter(v007 == 7) %>%
-  group_by(as_factor(v642a),v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100)
+#Tabulating weighted proportions of facilities that offer hbv testing, broken
+#down by year and facility type
+hbv.weighted <- svyby(~sf874a, ~v000 + v007, NP.ALL.survey, svymean, na.rm = TRUE)
 
-#Visualizing weighted proportions of stand-alone HTCs that perform
-#partner notification strategies for STIs
-NP.ALL.survey %>%
-  filter(v007 == 7, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
+#converting proportions to percentages
+hbv.weighted <- hbv.weighted %>%
+  mutate(sf874a = sf874a * 100) %>%
+  mutate(se = se * 100) %>%
+  rename(percent_sf874a = sf874a)
+
+#visualizing weighted proportions of facilities offering hbv testing
+hbv.weighted %>% 
   ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
+  geom_bar(aes(x = as_factor(v007), y = percent_sf874a, fill = v000), 
            stat = "identity", position = position_dodge(width = 0.9)) +
+  geom_errorbar(aes(x = as_factor(v007), ymin = percent_sf874a - se, 
+                    ymax = percent_sf874a + se, group = v000),
+                position = position_dodge(width = 0.9), width = 0.25) +
   labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Weighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
+       y = str_wrap("Proportion of Facilities Offering Any Test for Hepatitis B (Weighted %)", 
+                    width = 50), 
+       x = "Facility Type") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in Stand-Alone HTCs Over Time")
-
-
-#CHUs
-NP.ALL.survey %>%
-  filter(v007 == 8) %>%
-  group_by(as_factor(v642a),v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100)
-
-#Visualizing weighted proportions of CHUs that perform
-#partner notification strategies for STIs
-NP.ALL.survey %>%
-  filter(v007 == 8, !is.na(v642a)) %>%
-  group_by(v642a,v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100) %>%
-  ggplot() +
-  geom_bar(aes(x = as_factor(v642a), y = percent, fill = v000), 
-           stat = "identity", position = position_dodge(width = 0.9)) +
-  labs(fill = "Survey Year", 
-       y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Weighted %)", 
-                    width = 50), x = "Is Partner Notification Performed?") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Partner Notification Strategies for STIs in CHUs Over Time")
+  scale_y_continuous(breaks = seq(0, max(hbv.weighted$percent_sf874a) + 
+                                    max(hbv.weighted$se), by = 5))
