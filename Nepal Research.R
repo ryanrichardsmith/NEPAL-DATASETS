@@ -310,44 +310,44 @@ NP.2021 <- NP.2021 %>%
 
 #copying the district labels from the 2015 dataset
 #Note the following changes:
-#kavrepalanchok (2021 data) is now kavre (from 2015 data)
-#chitawan (2021 data) is now chitwan (from 2015 data)
-#bardiya (2021 data) is now bardia (from 2015 data)
+  #kavrepalanchok (2021 data) is now kavre (from 2015 data)
+  #chitawan (2021 data) is now chitwan (from 2015 data)
+  #bardiya (2021 data) is now bardia (from 2015 data)
 
 val_labels(NP.2021$v002) <- val_labels(NP.2015$v002)
 var_label(NP.2021$v002) <- "district (country-specific)" 
 
-#recoding 2015 facility types to group UHCs under PHCCs 
+#recoding 2015 facility types  
 NP.2015 <- NP.2015 %>%
   mutate(v007 = case_when(
-    v007 == 1 ~ 1,
-    v007 == 2 ~ 2,
-    v007 == 3 ~ 3,
-    v007 == 4 | v007 == 6 ~ 4, #grouping UHCs as PHCCs
-    v007 == 5 ~ 5,
-    v007 == 7 ~ 6))
+    v007 == 1 | v007 == 2 ~ 1,
+    v007 == 3 ~ 2,
+    v007 == 4 | v007 == 5 | v007 == 6 ~ 3, #grouping PHCCs,HPs & UHCs as peripheral
+    v007 == 7 ~ 4))
 
-#changing 2015 facility type labels to match 2021 labels
+#changing 2015 facility type labels 
 NP.2015$v007 <- labelled::labelled(
   NP.2015$v007,
-  c("federal/provincial-level hospitals" = 1, "local-level hospitals" = 2, 
-    "private hospitals" = 3, "PHCCs (incl. UHCs & CHUs)" = 4, "HPs" = 5, "stand-alone HTCs" = 6))
+  c("government hospitals" = 1, "private hospitals" = 2, 
+    "peripheral facilities" = 3, "stand-alone HTCs" = 4))
 
-#recoding 2021 facility types to group UHCs and CHUs under PHCCs 
+var_label(NP.2015$v007) <- "facility type"
+
+#recoding 2021 facility types  
 NP.2021 <- NP.2021 %>%
   mutate(v007 = case_when(
-    v007 == 1 ~ 1,
-    v007 == 2 ~ 2,
-    v007 == 3 ~ 3,
-    v007 == 4 | v007 == 6 | v007 == 8 ~ 4, #grouping UHCs & CHUs as PHCCs
-    v007 == 5 ~ 5,
-    v007 == 7 ~ 6))
+    v007 == 1 | v007 == 2 ~ 1,
+    v007 == 3 ~ 2,
+    v007 == 4 | v007 == 5 | v007 == 6 | v007 == 7 ~ 3, #grouping PHCCs,HPs,UHCs & CHUs as peripheral
+    v007 == 8 ~ 4))
 
-#swapping the last two 2021 facility type labels to avoid grouping 2021 CHUs with 2015 HTCs
+#changing 2021 facility type labels
 NP.2021$v007 <- labelled::labelled(
   NP.2021$v007,
-  c("federal/provincial-level hospitals" = 1, "local-level hospitals" = 2, 
-    "private hospitals" = 3, "PHCCs (incl. UHCs & CHUs)" = 4, "HPs" = 5, "stand-alone HTCs" = 6))
+  c("government hospitals" = 1, "private hospitals" = 2, 
+    "peripheral facilities" = 3, "stand-alone HTCs" = 4))
+
+var_label(NP.2021$v007) <- "facility type"
 
 #merging dataframes
 NP.ALL <- bind_rows(NP.2015, NP.2021)
@@ -380,6 +380,8 @@ hiv.rdt.unweighted <- NP.ALL %>%
   group_by(v007, v000) %>%
   summarise(percent_vt807 = mean(vt807 * 100, na.rm = TRUE))
 
+print(hiv.rdt.unweighted)
+
 #visualizing unweighted proportions offacilities offering hiv rapid tests
 hiv.rdt.unweighted %>% 
   ggplot() +
@@ -400,6 +402,8 @@ hiv.rdt.weighted <- hiv.rdt.weighted %>%
   mutate(vt807 = vt807 * 100) %>%
   mutate(se = se * 100) %>%
   rename(percent_vt807 = vt807)
+
+print(hiv.rdt.weighted)
 
 #visualizing weighted proportions of facilities offering hiv rapid tests
 hiv.rdt.weighted %>% 
@@ -425,42 +429,25 @@ hiv.rdt.weighted %>%
 #notification strategies for STIs, broken down by facility type and type 
 #of partner notification strategy
 
-#federal/provincial-level hospitals
+#government hospitals
 NP.ALL %>%
-  filter(v007 == 1) %>%
+  filter(v007 == 1, v016 == 1) %>%
   group_by(partner_notification,v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
 
-#local-level hospitals
-NP.ALL %>%
-  filter(v007 == 2) %>%
-  group_by(as_factor(v642a),v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100)
-
-
 #private hospitals
 NP.ALL %>%
-  filter(v007 == 3) %>%
+  filter(v007 == 2, v016 == 1) %>%
   group_by(as_factor(v642a),v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
 
-#PHCCs
+#peripheral facilities
 NP.ALL %>%
-  filter(v007 == 4) %>%
-  group_by(as_factor(v642a),v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100)
-
-#HPs
-NP.ALL %>%
-  filter(v007 == 5) %>%
+  filter(v007 == 3, v016 == 1) %>%
   group_by(as_factor(v642a),v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
@@ -468,7 +455,7 @@ NP.ALL %>%
 
 #stand-alone HTCs
 NP.ALL %>%
-  filter(v007 == 7) %>%
+  filter(v007 == 4, v016 == 1) %>%
   group_by(as_factor(v642a),v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
@@ -477,6 +464,7 @@ NP.ALL %>%
 #Visualizing unweighted proportions of health facilities that perform partner
 #notification strategies for STIs
 NP.ALL %>%
+  filter(v016 == 1) %>%
   group_by(v007,partner_notification,v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
@@ -488,49 +476,39 @@ NP.ALL %>%
        y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Unweighted %)", 
                     width = 50), x = "Survey Year") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  scale_y_continuous(labels = percent_format()) +
-  ggtitle("Wighted Partner Notification Strategies for STIs in Health Facilities Over Time") +
-  theme(strip.text.x = element_text(hjust = 0))
+  scale_y_continuous(labels = percent_format())
 
 #Tabulating weighted proportions of facilities that perform partner 
 #notification strategies for STIs, broken down by facility type and type 
 #of partner notification strategy
 
-#federal/provincial-level hospitals
+#government hospitals
 NP.ALL.survey %>%
-  filter(v007 == 1) %>%
+  filter(v007 == 1, v016 == 1) %>%
   group_by(v000, partner_notification) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100) 
   
-#local-level hospitals
-NP.ALL.survey %>%
-  filter(v007 == 2) %>%
-  group_by(as_factor(partner_notification),v000) %>%
-  summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(percent = (count / sum(count))*100)
-
 #private hospitals
 NP.ALL.survey %>%
-  filter(v007 == 3) %>%
+  filter(v007 == 2, v016 == 1) %>%
   group_by(as_factor(partner_notification),v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
 
-#PHCCs
+#peripheral facilities
 NP.ALL.survey %>%
-  filter(v007 == 4) %>%
+  filter(v007 == 3, v016 == 1) %>%
   group_by(as_factor(partner_notification),v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
   mutate(percent = (count / sum(count))*100)
 
-#HPs
+#stand-alone HTCs
 NP.ALL.survey %>%
-  filter(v007 == 5) %>%
+  filter(v007 == 4, v016 == 1) %>%
   group_by(as_factor(partner_notification),v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
@@ -539,6 +517,7 @@ NP.ALL.survey %>%
 #Visualizing weighted proportions of health facilities that perform partner
 #notification strategies for STIs
 NP.ALL.survey %>%
+  filter(v016 == 1) %>%
   group_by(v007,partner_notification,v000) %>%
   summarise(count = n()) %>%
   ungroup() %>%
@@ -550,9 +529,7 @@ NP.ALL.survey %>%
        y = str_wrap("Proportion of Facilities Performing Partner Notifications for STIs (Weighted %)", 
                     width = 50), x = "Survey Year") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  scale_y_continuous(labels = percent_format()) +
-  ggtitle("Weighted Partner Notification Strategies for STIs in Health Facilities Over Time") +
-  theme(strip.text.x = element_text(hjust = 0))
+  scale_y_continuous(labels = percent_format()) 
 
 ###########################################
 #Exploring Changes in HCV Testing Over Time
@@ -563,6 +540,8 @@ NP.ALL.survey %>%
 hcv.unweighted <- NP.ALL %>%
   group_by(v007, v000) %>%
   summarise(percent_sf874d = mean(sf874d * 100, na.rm = TRUE))
+
+print(hcv.unweighted)
 
 #visualizing unweighted proportions offacilities offering hcv testing
 hcv.unweighted %>% 
@@ -584,6 +563,8 @@ hcv.weighted <- hcv.weighted %>%
   mutate(sf874d = sf874d * 100) %>%
   mutate(se = se * 100) %>%
   rename(percent_sf874d = sf874d)
+
+print(hcv.weighted)
 
 #visualizing weighted proportions of facilities offering hcv testing
 hcv.weighted %>% 
@@ -612,6 +593,8 @@ hbv.unweighted <- NP.ALL %>%
   group_by(v007, v000) %>%
   summarise(percent_sf874a = mean(sf874a * 100, na.rm = TRUE))
 
+print(hbv.unweighted)
+
 #visualizing unweighted proportions offacilities offering hbv testing
 hbv.unweighted %>% 
   ggplot() +
@@ -632,6 +615,8 @@ hbv.weighted <- hbv.weighted %>%
   mutate(sf874a = sf874a * 100) %>%
   mutate(se = se * 100) %>%
   rename(percent_sf874a = sf874a)
+
+print(hbv.weighted)
 
 #visualizing weighted proportions of facilities offering hbv testing
 hbv.weighted %>% 
