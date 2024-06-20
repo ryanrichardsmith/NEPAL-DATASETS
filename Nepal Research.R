@@ -633,3 +633,51 @@ hbv.weighted %>%
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
   scale_y_continuous(breaks = seq(0, max(hbv.weighted$percent_sf874a) + 
                                     max(hbv.weighted$se), by = 5))
+
+###############################################
+#Plotting Changes in HIV Testing Fees Over Time
+###############################################
+
+#plotting unweighted proportions
+NP.ALL %>%
+  filter(v144o == 0 | v144o == 1) %>% #filtering out dk/no response/na option & missing values
+  group_by(v007, v000) %>%
+  summarise(percent_v144o = mean(v144o * 100, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_bar(aes(x = as_factor(v007), y = percent_v144o, fill = v000), 
+           stat = "identity", position = position_dodge(width = 0.9)) +
+  labs(fill = "Survey Year", 
+       y = str_wrap("Proportion of Facilities Charging Fees for HIV Diagnostic Testing (Unweighted %)", 
+                    width = 50), x = "Facility Type") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+  scale_y_continuous(breaks = seq(0, max(100), by = 5)) 
+
+
+#Tabulating weighted proportions of facilities that charge for hiv testing, broken
+#down by year and facility type
+filtered.hiv.test.fee <- subset(NP.ALL.survey, v144o == 0 | v144o == 1)
+hiv.test.fee.weighted <- svyby(~v144o, ~v000 + v007, filtered.hiv.test.fee, svymean, na.rm = TRUE)
+
+#converting proportions to percentages
+hiv.test.fee.weighted <- hiv.test.fee.weighted %>%
+  mutate(v144o = v144o * 100) %>%
+  mutate(se = se * 100) %>%
+  rename(percent_v144o = v144o)
+
+print(hiv.test.fee.weighted)
+
+#visualizing weighted proportions of facilities charginf fees for hiv testing
+hiv.test.fee.weighted %>% 
+  ggplot() +
+  geom_bar(aes(x = as_factor(v007), y = percent_v144o, fill = v000), 
+           stat = "identity", position = position_dodge(width = 0.9)) +
+  geom_errorbar(aes(x = as_factor(v007), ymin = percent_v144o - se, 
+                    ymax = percent_v144o + se, group = v000),
+                position = position_dodge(width = 0.9), width = 0.25) +
+  labs(fill = "Survey Year", 
+       y = str_wrap("Proportion of Facilities Charging Fees for HIV Diagnostic Testing (Weighted %)", 
+                    width = 50), 
+       x = "Facility Type") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+  scale_y_continuous(breaks = seq(0, max(hiv.test.fee.weighted$percent_v144o) + 
+                                    max(hiv.test.fee.weighted$se), by = 5)) 
