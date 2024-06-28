@@ -349,6 +349,13 @@ NP.2021$v007 <- labelled::labelled(
 
 var_label(NP.2021$v007) <- "facility type"
 
+#removing variables marked as 'na' in 2015 data to prevent duplication in the next step
+NP.2015 <- NP.2015 %>% select(-v146e, -v146f)
+
+#renaming 2015 sources of income variable to match 2021 data
+NP.2015 <- NP.2015 %>%
+  rename(v146e = v146c, v146eb = v146cb, v146f = v146d, v146fb = v146db)
+
 #merging dataframes
 NP.ALL <- bind_rows(NP.2015, NP.2021)
 
@@ -376,4 +383,4 @@ saveRDS(NP.2021, file = "NP.2021.rds")
 saveRDS(NP.2015.survey, file = "NP.2015.survey.rds")
 saveRDS(NP.2021.survey, file = "NP.2021.survey.rds")
 saveRDS(NP.ALL, file = "NP.ALL.rds")
-saveRDS(NP.ALL.survey, file = "NP.ALL.rds")
+saveRDS(NP.ALL.survey, file = "NP.ALL.survey.rds")
