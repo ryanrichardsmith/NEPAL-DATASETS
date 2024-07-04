@@ -8,6 +8,7 @@ library(labelled)
 library(survey)
 library(tidyr)
 library(scales)
+library(forcats)
 
 #loading datasets
 NP.2015 <- readRDS("NP.2015.rds")
@@ -23,38 +24,44 @@ NP.ALL.survey <- readRDS("NP.ALL.survey.rds")
 
 #creating table for 2015
 hiv.testing.2015 <- NP.ALL.survey %>%
-  filter(v000 == "NP7", v042 != 7, v146a != 8, v146b != 8, v146e != 8, v146f != 8, v146x != 8) %>%
+  filter(v000 == "NP7", v042 != 7, 
+         v146a != 8, !is.na(v146a),
+         v146b != 8, !is.na(v146b),
+         v146e != 8, !is.na(v146e),
+         v146f != 8, !is.na(v146f),
+         v146x != 8, !is.na(v146x)) %>%
   mutate(
-    v007 = as_factor(v007),
-    v042 = as_factor(v042),
-    v146a = as_factor(v146a),
-    v146b = as_factor(v146b),
-    v146e = as_factor(v146e),
-    v146f = as_factor(v146f),
-    v146x = as_factor(v146x),
-    v173a = as_factor(v173a)
+    v042 = as_factor(v042) %>% fct_drop(),
+    v007 = as_factor(v007) %>% fct_drop(),
+    v146a = as_factor(v146a) %>% fct_drop(),
+    v146b = as_factor(v146b) %>% fct_drop(),
+    v146e = as_factor(v146e) %>% fct_drop(),
+    v146f = as_factor(v146f) %>% fct_drop(),
+    v146x = as_factor(v146x) %>% fct_drop(),
+    v173a = as_factor(v173a) %>% fct_drop(),
   ) %>%
   tbl_svysummary(include = c(v007,v146a,v146b,v146e,v146f, v146x, v173a),
-           by = v042, percent = "row", missing = "no") %>%
-  add_p(test = list(all_continuous() ~ "svyttest", all_categorical() ~ "svychisq")) %>%
+           by = v042, percent = "row", missing = "no")  %>%
+add_p() %>%
   modify_header(label ~ "**HIV Testing Data Present & Completed**")
+
 
 #creating table for 2021
 hiv.testing.2021 <- NP.ALL.survey %>%
   filter(v000 == "NP8",v042 != 7, v146a != 8, v146b != 8, v146e != 8, v146f != 8, v146x != 8) %>%
   mutate(
-    v007 = as_factor(v007),
-    v042 = as_factor(v042),
-    v146a = as_factor(v146a),
-    v146b = as_factor(v146b),
-    v146e = as_factor(v146e),
-    v146f = as_factor(v146f),
-    v146x = as_factor(v146x),
-    v173a = as_factor(v173a)
+    v042 = as_factor(v042) %>% fct_drop(),
+    v007 = as_factor(v007) %>% fct_drop(),
+    v146a = as_factor(v146a) %>% fct_drop(),
+    v146b = as_factor(v146b) %>% fct_drop(),
+    v146e = as_factor(v146e) %>% fct_drop(),
+    v146f = as_factor(v146f) %>% fct_drop(),
+    v146x = as_factor(v146x) %>% fct_drop(),
+    v173a = as_factor(v173a) %>% fct_drop(),
   ) %>%
   tbl_svysummary(include = c(v007,v146a,v146b,v146e,v146f, v146x, v173a),
                                    by = v042, percent = "row", missing = "no") %>%
-  add_p(test = list(all_continuous() ~ "svyttest", all_categorical() ~ "svychisq")) %>%
+  add_p() %>%
   modify_header(label ~ "**HIV Testing Data Present & Completed**")
 
 #merging tables
@@ -68,8 +75,8 @@ tbl_merge(list(hiv.testing.2015, hiv.testing.2021),
 #creating a variable to determine which facilities charge fees for hiv testing
 NP.ALL.survey <- NP.ALL.survey %>%
   mutate(hiv_testing_fee = case_when(
-    v144 == 0 ~ 0,
-    v144 == 1 ~ 1
+    v144 == 0 | v144 == 1 ~ 0,
+    v144 == 2 ~ 1
   )) %>%
   mutate(
     hiv_testing_fee = labelled::labelled(
@@ -80,41 +87,57 @@ NP.ALL.survey <- NP.ALL.survey %>%
 
 #creating table for 2015
 hiv.testing.fee.2015 <- NP.ALL.survey %>%
-  filter(v000 == "NP7") %>%
+  filter(v000 == "NP7", v042 == 1, !is.na(hiv_testing_fee), v042 != 7, 
+         v146a != 8, !is.na(v146a),
+         v146b != 8, !is.na(v146b),
+         v146e != 8, !is.na(v146e),
+         v146f != 8, !is.na(v146f),
+         v146x != 8, !is.na(v146x))  %>%
   mutate(
-    v007 = as_factor(v007),
-    hiv_testing_fee = as_factor(hiv_testing_fee),
-    v146a = as_factor(v146a),
-    v146b = as_factor(v146b),
-    v146e = as_factor(v146e),
-    v146f = as_factor(v146f),
-    v146x = as_factor(v146x),
-    v173a = as_factor(v173a),
-    vt807 = as_factor(vt807)
-    ) %>%
+    hiv_testing_fee = as_factor(hiv_testing_fee), 
+    v007 = as_factor(v007) %>% fct_drop(),
+    v146a = as_factor(v146a) %>% fct_drop(),
+    v146b = as_factor(v146b) %>% fct_drop(),
+    v146e = as_factor(v146e) %>% fct_drop(),
+    v146f = as_factor(v146f) %>% fct_drop(),
+    v146x = as_factor(v146x) %>% fct_drop(),
+    v173a = as_factor(v173a) %>% fct_drop(),
+    vt807 = as_factor(vt807) %>% fct_drop(),
+    vt808 = as_factor(vt808) %>% fct_drop(),
+    vt809 = as_factor(vt809) %>% fct_drop(),
+    vt810 = as_factor(vt810) %>% fct_drop(),
+  )  %>%
   tbl_svysummary(include = c(v007,v146a,v146b,v146e,v146f, v146x, v173a, vt807, vt808, vt809, vt810),
-                 by = hiv_testing_fee, percent = "row", missing = "no", 
-                 type = list(vt808 ~ "categorical", vt809  ~ "categorical", vt810 ~ "categorical")) %>%
-  add_p(test = list(all_continuous() ~ "svyttest", all_categorical() ~ "svychisq")) %>%
+                 by = hiv_testing_fee, percent = "row", missing = "no") %>%
+  add_p() %>%
   modify_header(label ~ "**Does Facility Charge Fees for HIV Testing**")
 
 
 #creating table for 2021
 hiv.testing.fee.2021 <- NP.ALL.survey %>%
-  filter(v000 == "NP8", v042 == 1, v146a != 8, v146b != 8, v146e != 8, v146f != 8, v146x != 8) %>%
+  filter(v000 == "NP8", v042 == 1, v042 != 7, !is.na(hiv_testing_fee), 
+         v146a != 8, !is.na(v146a),
+         v146b != 8, !is.na(v146b),
+         v146e != 8, !is.na(v146e),
+         v146f != 8, !is.na(v146f),
+         v146x != 8, !is.na(v146x)) %>%
   mutate(
-    v007 = as_factor(v007),
-    hiv_testing_fee = as_factor(hiv_testing_fee),
-    v146a = as_factor(v146a),
-    v146b = as_factor(v146b),
-    v146e = as_factor(v146e),
-    v146f = as_factor(v146f),
-    v146x = as_factor(v146x),
-    v173a = as_factor(v173a)
+    hiv_testing_fee = as_factor(hiv_testing_fee) %>% fct_drop(),
+    v007 = as_factor(v007) %>% fct_drop(),
+    v146a = as_factor(v146a) %>% fct_drop(),
+    v146b = as_factor(v146b) %>% fct_drop(),
+    v146e = as_factor(v146e) %>% fct_drop(),
+    v146f = as_factor(v146f) %>% fct_drop(),
+    v146x = as_factor(v146x) %>% fct_drop(),
+    v173a = as_factor(v173a) %>% fct_drop(),
+    vt807 = as_factor(vt807) %>% fct_drop(),
+    vt808 = as_factor(vt808) %>% fct_drop(),
+    vt809 = as_factor(vt809) %>% fct_drop(),
+    vt810 = as_factor(vt810) %>% fct_drop(),
     ) %>%
   tbl_svysummary(include = c(v007,v146a,v146b,v146e,v146f, v146x, v173a, vt807, vt808, vt809, vt810),
                  by = hiv_testing_fee, percent = "row", missing = "no") %>%
-  add_p(test = list(all_continuous() ~ "svyttest", all_categorical() ~ "svychisq")) %>%
+  add_p() %>%
   modify_header(label ~ "**Does Facility Charge Fees for HIV Testing**")
 
 #merging tables
