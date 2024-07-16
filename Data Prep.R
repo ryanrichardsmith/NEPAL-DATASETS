@@ -359,18 +359,6 @@ NP.2015 <- NP.2015 %>%
 #merging dataframes
 NP.ALL <- bind_rows(NP.2015, NP.2021)
 
-#creating simplified partner notification variable
-NP.ALL <- NP.ALL %>%
-  mutate(partner_notification = case_when(
-    v642a == 0 ~ 0,
-    v642a == 3 ~ 1,
-    v642a == 1 | v642a == 2 | v642a == 4 ~ 2
-  ))
-
-NP.ALL$partner_notification <- labelled::labelled(
-  NP.ALL$partner_notification,
-  c("no" = 0, "yes, only passive" = 1, "yes, active or passive" = 2))
-
 #taking survey design into account
 NP.ALL.survey <- NP.ALL |>
   mutate(v005 = v005/1000000) |> 
